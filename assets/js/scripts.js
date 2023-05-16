@@ -76,3 +76,16 @@ function getFiveDayForecast() {
         }
     });
 }
+
+// Add event listener to the search button
+$('.search').on('click', handleSearch);
+
+// Load city history from local storage on page load
+if (localStorage.getItem('city')) {
+    cityHist = JSON.parse(localStorage.getItem('city'));
+    updateCityHistory();
+}
+
+// Load weather data for default city on page load
+getWeatherToday();
+getFiveDayForecast();
