@@ -18,3 +18,23 @@ function handleSearch(event) {
         getFiveDayForecast();
     }
 }
+
+function updateCityHistory() {
+    $('.cityHist').empty();
+    cityHist.forEach((city) => {
+        let btn = $('<button>')
+            .addClass('btn btn-outline-secondary histBtn')
+            .attr('type', 'button')
+            .text(city)
+            .on('click', function() {
+                city = $(this).text();
+                getWeatherToday();
+                getFiveDayForecast();
+            });
+        $('.cityHist').prepend(btn);
+    });
+}
+
+$(document).ready(function() {
+    $('.search').click(handleSearch);
+});
