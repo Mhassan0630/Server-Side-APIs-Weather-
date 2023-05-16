@@ -35,6 +35,44 @@ function updateCityHistory() {
     });
 }
 
-$(document).ready(function() {
-    $('.search').click(handleSearch);
-});
+function getWeatherToday() {
+    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=imperial`;
+    $.ajax({
+        url: url,
+        method: "GET"
+    }).then(function(response) {
+        const temperature = response.main.temp;
+        const humidity = response.main.humidity;
+        const windSpeed = response.wind.speed;
+
+        $('.cardBodyToday').html(`
+            <p>Temperature: ${temperature}&deg;F</p>
+            <p>Humidity: ${humidity}%</p>
+            <p>Wind Speed: ${windSpeed} mph</p>
+        `);
+    });
+}
+
+function getFiveDayForecast() {
+    const url = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${key}&units=imperial`;
+    $.ajax({
+        url: url,
+        method: "GET"
+    }).then(function(response) {
+        $('.fiveForecast').empty();
+        for (let i = 0; i < response.list.length; i+=8) {
+            const dayData = response.list[i];
+            const temperature = dayData.main.temp;
+            const humidity = dayData.main.humidity;
+
+            const forecastElem = $(`
+                <div class="col">
+                    <p>Date: ${dayData.dt_txt}</p>
+                    <p>Temperature: ${temperature}&deg;F</p>
+                    <p>Humidity: ${humidity}%</p>
+                </div>
+            `);
+            $('.fiveForecast').append(forecastElem);
+        }
+    });
+}
