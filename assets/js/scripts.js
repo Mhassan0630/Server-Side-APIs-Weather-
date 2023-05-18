@@ -36,9 +36,9 @@ function updateCityHistory() {
 }
 
 function getWeatherToday() {
-    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${key}&units=imperial`;
+    let queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + key + "&units=imperial";
     $.ajax({
-        url: url,
+        url: queryURL,
         method: "GET"
     }).then(function(response) {
         const temperature = response.main.temp;
@@ -54,9 +54,9 @@ function getWeatherToday() {
 }
 
 function getFiveDayForecast() {
-    const url = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${key}&units=imperial`;
+    let queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + key + "&units=imperial";
     $.ajax({
-        url: url,
+        url: queryURL,
         method: "GET"
     }).then(function(response) {
         $('.fiveForecast').empty();
